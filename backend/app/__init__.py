@@ -1,0 +1,1 @@
+"""FractionalPro Academy Backend Application"""
