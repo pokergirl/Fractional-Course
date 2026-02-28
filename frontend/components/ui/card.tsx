@@ -1,11 +1,12 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CardProps extends HTMLMotionProps<"div"> {
   hoverEffect?: boolean;
+  children?: React.ReactNode;
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
