@@ -58,8 +58,8 @@ def test_integration():
         session = StripeService.create_checkout_session(
             customer_email="test@example.com",
             customer_name="Test User",
-            success_url="http://localhost:3000/success",
-            cancel_url="http://localhost:3000/?canceled=true"
+            success_url=f"{settings.FRONTEND_URL}/success",
+            cancel_url=f"{settings.FRONTEND_URL}/?canceled=true"
         )
         print(f"✅ Stripe: Success! Checkout Session Created.")
         print(f"   Checkout URL: {session['checkout_url']}")

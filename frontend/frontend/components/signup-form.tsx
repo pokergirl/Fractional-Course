@@ -40,7 +40,7 @@ const SignupForm = () => {
 
     try {
       // Call backend API to create signup and get Stripe checkout URL
-      const response = await fetch('http://localhost:8000/api/signup/', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/signup/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

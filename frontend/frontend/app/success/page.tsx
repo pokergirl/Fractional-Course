@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Check, Loader2, XCircle } from 'lucide-react';
 import Link from 'next/link';
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
@@ -21,7 +21,7 @@ export default function SuccessPage() {
 
   const verifyPayment = async (sessionId: string) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/signup/verify/${sessionId}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/signup/verify/${sessionId}`);
       
       if (!response.ok) {
         throw new Error('Failed to verify payment');
@@ -136,5 +136,20 @@ export default function SuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-slate-50">
+        <div className="text-center">
+          <Loader2 className="w-16 h-16 text-blue-600 animate-spin mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">Loading...</h2>
+        </div>
+      </div>
+    }>
+      <SuccessContent />
+    </Suspense>
   );
 }
