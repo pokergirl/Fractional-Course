@@ -1,0 +1,16 @@
+node_modules
+package-lock.json
+# Backend / Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv
+.env
+.env.local
+*.db
+*.sqlite3
+*.log
+.pytest_cache/
+.coverage
+htmlcov/
