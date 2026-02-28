@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     # Application
     API_HOST: str = "0.0.0.0"
     API_PORT: int = 8000
+    # Allow PORT env var to override API_PORT (common in PaaS like Heroku/Render)
+    PORT: Optional[int] = None
     DEBUG: bool = False
     
     # CORS
@@ -32,6 +34,7 @@ class Settings(BaseSettings):
 
     # Google Sheets (Optional)
     GOOGLE_SHEETS_CREDENTIALS_FILE: Optional[str] = "service_account.json"
+    GOOGLE_SHEETS_CREDENTIALS_JSON: Optional[str] = None
     GOOGLE_SHEET_ID: Optional[str] = None
 
     # Security

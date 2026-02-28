@@ -1,4 +1,5 @@
 import gspread
+import json
 from oauth2client.service_account import ServiceAccountCredentials
 from app.config.settings import settings
 import logging
@@ -16,14 +17,18 @@ class GoogleSheetsService:
         """
         Authenticate with Google Sheets API and return the client.
         """
-        if not settings.GOOGLE_SHEETS_CREDENTIALS_FILE:
-            logger.warning("Google Sheets credentials file not configured.")
+        if not settings.GOOGLE_SHEETS_CREDENTIALS_FILE and not settings.GOOGLE_SHEETS_CREDENTIALS_JSON:
+            logger.warning("Google Sheets credentials not configured.")
             return None
         
         try:
-            creds = ServiceAccountCredentials.from_json_keyfile_name(
-                settings.GOOGLE_SHEETS_CREDENTIALS_FILE, cls._scope
-            )
+            if settings.GOOGLE_SHEETS_CREDENTIALS_JSON:
+                creds_dict = json.loads(settings.GOOGLE_SHEETS_CREDENTIALS_JSON)
+                creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, cls._scope)
+            else:
+                creds = ServiceAccountCredentials.from_json_keyfile_name(
+                    settings.GOOGLE_SHEETS_CREDENTIALS_FILE, cls._scope
+                )
             client = gspread.authorize(creds)
             return client
         except Exception as e:
